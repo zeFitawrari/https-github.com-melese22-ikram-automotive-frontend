@@ -26,6 +26,8 @@ export default function DashboardPage() {
 
   const queryClient = useQueryClient();
   const { socket, connected } = useSocket();
+  const canViewAdminDashboard = !!user && ['SuperAdmin', 'WorkshopManager'].includes(user.role);
+  const isMechanic = user?.role === 'Mechanic';
 
   useEffect(() => {
     if (!loading && (!user || user.role === 'Customer')) {
@@ -59,7 +61,7 @@ export default function DashboardPage() {
       const { data } = await api.get('/reports/dashboard');
       return data;
     },
-    enabled: !!user && user.role !== 'Customer',
+    enabled: canViewAdminDashboard,
     refetchInterval: connected ? false : 30000,
   });
 
@@ -87,6 +89,53 @@ export default function DashboardPage() {
   }
 
   if (!user || user.role === 'Customer') return null;
+
+  if (isMechanic) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50/30">
+        <Navbar />
+        <main className="w-full lg:ml-64 px-4 sm:px-6 lg:px-8 py-8">
+          <div className="flex items-center gap-3 mb-8">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-blue-600 flex items-center justify-center shadow-sm">
+              <HiOutlineWrenchScrewdriver className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900">My Work Queue</h2>
+              <p className="text-sm text-gray-500">Focus on the jobs that need your attention today</p>
+            </div>
+          </div>
+
+          <div className="rounded-2xl border border-indigo-100 bg-indigo-50/70 p-4 mb-8">
+            <p className="text-sm font-medium text-indigo-700">
+              Dashboard summaries for management reports are hidden for mechanics, so this view keeps you focused on active work.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+              <HiOutlineWrenchScrewdriver className="w-5 h-5 text-indigo-500" />
+              Active Job Cards ({activeData?.length || 0})
+            </h3>
+            {activeLoading ? (
+              <CardSkeleton count={4} />
+            ) : activeData?.length === 0 ? (
+              <div className="text-center py-16 bg-white rounded-2xl border border-dashed border-gray-300">
+                <HiOutlineWrenchScrewdriver className="w-10 h-10 mx-auto text-gray-300 mb-3" />
+                <p className="text-gray-500 font-medium">No active job cards right now</p>
+                <p className="text-gray-400 text-sm mt-1">You’re all caught up for the moment.</p>
+              </div>
+            ) : (
+              <div className="grid gap-4 md:grid-cols-2">
+                {activeData?.map((jobCard: any) => (
+                  <JobCardCard key={jobCard.id} jobCard={jobCard} />
+                ))}
+              </div>
+            )}
+          </div>
+        </main>
+      </div>
+    );
+  }
 
   const sb = stats?.statusBreakdown || [];
   const statusCounts: Record<string, number> = {};
