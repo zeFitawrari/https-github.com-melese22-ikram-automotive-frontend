@@ -3,13 +3,16 @@
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import api from '@/lib/api';
 import toast from 'react-hot-toast';
 
 export default function PublicBookPage() {
+  const router = useRouter();
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
+  const [createAccount, setCreateAccount] = useState(true);
   const [make, setMake] = useState('');
   const [model, setModel] = useState('');
   const [year, setYear] = useState('');
@@ -52,7 +55,15 @@ export default function PublicBookPage() {
       const { data } = await api.post('/appointments/public-book', payload);
       return data;
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      if (data?.token && data?.user) {
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+        toast.success('Appointment booked! Your account is ready and you are signed in.');
+        router.push('/portal');
+        return;
+      }
+
       setDone(true);
       toast.success('Appointment booked! We\'ll confirm shortly.');
     },
@@ -64,6 +75,7 @@ export default function PublicBookPage() {
     if (!selectedWorkshop) { toast.error('Please select a workshop.'); return; }
     bookAppt.mutate({
       name, phone, email: email || undefined,
+      createAccount,
       make, model, year: year ? parseInt(year) : undefined, plateNumber: plateNumber || undefined,
       workshopId: selectedWorkshop, title, scheduledDate, startTime, endTime, notes: notes || undefined,
     });
@@ -120,6 +132,20 @@ export default function PublicBookPage() {
                 <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-primary-500" placeholder="you@example.com" />
               </div>
+            </div>
+
+            <div className="flex items-start gap-3 rounded-lg border border-gray-200 bg-gray-50 p-3">
+              <input
+                id="create-account"
+                type="checkbox"
+                checked={createAccount}
+                onChange={(e) => setCreateAccount(e.target.checked)}
+                className="mt-1 h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+              />
+              <label htmlFor="create-account" className="text-sm text-gray-700">
+                <span className="font-medium text-gray-900">Create an Ikram account for this phone number</span>
+                <span className="mt-1 block text-xs text-gray-500">We&apos;ll create your Ikram account with this phone number so you can track this booking.</span>
+              </label>
             </div>
           </div>
 
