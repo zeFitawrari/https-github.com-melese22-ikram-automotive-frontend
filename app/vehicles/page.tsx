@@ -25,6 +25,12 @@ export default function VehiclesPage() {
     vin: '',
     mileage: '',
     customerId: '',
+    vehicleType: 'ICE',
+    batteryCapacity: '',
+    batterySoc: '',
+    batteryHealth: '',
+    motorType: '',
+    firmwareVersion: '',
   });
 
   const { data: customers } = useQuery({
@@ -57,7 +63,7 @@ export default function VehiclesPage() {
       queryClient.invalidateQueries({ queryKey: ['vehicles'] });
       toast.success('Vehicle registered!');
       setShowCreate(false);
-      setForm({ plateNumber: '', chassisNumber: '', make: '', model: '', year: '', vin: '', mileage: '', customerId: '' });
+      setForm({ plateNumber: '', chassisNumber: '', make: '', model: '', year: '', vin: '', mileage: '', customerId: '', vehicleType: 'ICE', batteryCapacity: '', batterySoc: '', batteryHealth: '', motorType: '', firmwareVersion: '' });
     },
     onError: (err: any) => {
       toast.error(err.response?.data?.error || 'Failed to register vehicle');
@@ -69,7 +75,23 @@ export default function VehiclesPage() {
     if (!form.make || !form.model || !form.customerId) {
       return toast.error('Make, model, and customer are required');
     }
-    createMutation.mutate(form);
+    const mileage = form.mileage ? Number(form.mileage) : undefined;
+    const batteryCapacity = form.batteryCapacity ? Number(form.batteryCapacity) : undefined;
+    const batterySoc = form.batterySoc ? Number(form.batterySoc) : undefined;
+    const batteryHealth = form.batteryHealth ? Number(form.batteryHealth) : undefined;
+    if (mileage !== undefined && mileage < 0) return toast.error('Mileage cannot be negative');
+    if (batteryCapacity !== undefined && batteryCapacity < 0) return toast.error('Battery capacity cannot be negative');
+    if (batterySoc !== undefined && (batterySoc < 0 || batterySoc > 100)) return toast.error('Battery SOC must be between 0 and 100');
+    if (batteryHealth !== undefined && (batteryHealth < 0 || batteryHealth > 100)) return toast.error('Battery health must be between 0 and 100');
+
+    createMutation.mutate({
+      ...form,
+      year: form.year ? Number(form.year) : undefined,
+      mileage,
+      batteryCapacity,
+      batterySoc,
+      batteryHealth,
+    });
   };
 
   const handleSearch = (val: string) => {
@@ -153,6 +175,39 @@ export default function VehiclesPage() {
                 <label className="block text-sm font-medium text-gray-700 mb-1">Mileage (km)</label>
                 <input value={form.mileage} onChange={(e) => setForm({ ...form, mileage: e.target.value })} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none bg-white" placeholder="15000" type="number" />
               </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Vehicle Type *</label>
+                <select value={form.vehicleType} onChange={(e) => setForm({ ...form, vehicleType: e.target.value })} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none bg-white" required>
+                  <option value="ICE">ICE</option>
+                  <option value="Hybrid">Hybrid</option>
+                  <option value="BEV">EV (BEV)</option>
+                  <option value="PHEV">Plug-in Hybrid (PHEV)</option>
+                </select>
+              </div>
+              {['Hybrid', 'BEV', 'PHEV'].includes(form.vehicleType) && (
+                <>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Battery Capacity (kWh)</label>
+                    <input value={form.batteryCapacity} onChange={(e) => setForm({ ...form, batteryCapacity: e.target.value })} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none bg-white" placeholder="75" type="number" min="0" step="0.1" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Battery SOC (%)</label>
+                    <input value={form.batterySoc} onChange={(e) => setForm({ ...form, batterySoc: e.target.value })} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none bg-white" placeholder="80" type="number" min="0" max="100" step="0.1" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Battery Health (%)</label>
+                    <input value={form.batteryHealth} onChange={(e) => setForm({ ...form, batteryHealth: e.target.value })} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none bg-white" placeholder="95" type="number" min="0" max="100" step="0.1" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Motor Type</label>
+                    <input value={form.motorType} onChange={(e) => setForm({ ...form, motorType: e.target.value })} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none bg-white" placeholder="Permanent magnet" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Firmware Version</label>
+                    <input value={form.firmwareVersion} onChange={(e) => setForm({ ...form, firmwareVersion: e.target.value })} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none bg-white" placeholder="v2.1.0" />
+                  </div>
+                </>
+              )}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Customer *</label>
                 <select value={form.customerId} onChange={(e) => setForm({ ...form, customerId: e.target.value })} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-cyan-500 outline-none bg-white" required>
