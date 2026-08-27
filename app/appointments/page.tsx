@@ -7,7 +7,7 @@ import Navbar from '@/components/Navbar';
 import Pagination from '@/components/Pagination';
 import { CardSkeleton } from '@/components/Skeleton';
 import api from '@/lib/api';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { HiOutlineCalendarDays, HiOutlinePlusCircle } from 'react-icons/hi2';
 
@@ -23,9 +23,13 @@ const statusStyles: Record<string, string> = {
 export default function AppointmentsPage() {
   const { user } = useAuth();
   const router = useRouter();
-  const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
+  const [date, setDate] = useState('');
   const [page, setPage] = useState(1);
   const queryClient = useQueryClient();
+
+  useEffect(() => {
+    setDate(new Date().toISOString().split('T')[0]);
+  }, []);
 
   const { data: appointmentsData, isLoading } = useQuery({
     queryKey: ['appointments', date, page],

@@ -5,7 +5,7 @@ import { useAuth } from '@/lib/auth';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/Navbar';
 import api from '@/lib/api';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { HiOutlineCalendarDays, HiOutlineArrowLeft, HiOutlineUser, HiOutlineTruck, HiOutlineClock, HiOutlinePencilSquare } from 'react-icons/hi2';
 
@@ -15,10 +15,14 @@ export default function NewAppointmentPage() {
   const [title, setTitle] = useState('');
   const [customerId, setCustomerId] = useState('');
   const [vehicleId, setVehicleId] = useState('');
-  const [scheduledDate, setScheduledDate] = useState(new Date().toISOString().split('T')[0]);
+  const [scheduledDate, setScheduledDate] = useState('');
   const [startTime, setStartTime] = useState('09:00');
   const [endTime, setEndTime] = useState('10:00');
   const [notes, setNotes] = useState('');
+
+  useEffect(() => {
+    setScheduledDate(new Date().toISOString().split('T')[0]);
+  }, []);
 
   const { data: customers } = useQuery({
     queryKey: ['users-customers'],

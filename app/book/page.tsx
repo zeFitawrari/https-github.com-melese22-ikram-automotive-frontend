@@ -18,11 +18,15 @@ export default function PublicBookPage() {
   const [year, setYear] = useState('');
   const [plateNumber, setPlateNumber] = useState('');
   const [title, setTitle] = useState('');
-  const [scheduledDate, setScheduledDate] = useState(new Date().toISOString().split('T')[0]);
+  const [scheduledDate, setScheduledDate] = useState('');
   const [startTime, setStartTime] = useState('09:00');
   const [endTime, setEndTime] = useState('10:00');
   const [notes, setNotes] = useState('');
   const [done, setDone] = useState(false);
+
+  useEffect(() => {
+    setScheduledDate(new Date().toISOString().split('T')[0]);
+  }, []);
 
   const { data: workshops } = useQuery({
     queryKey: ['public-workshops'],
