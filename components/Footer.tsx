@@ -18,6 +18,8 @@ export default function Footer() {
         <div className="flex items-center gap-4">
           <Link href="/login" className="hover:text-gray-700 transition">Login</Link>
           <Link href="/book" className="hover:text-gray-700 transition">Book</Link>
+          <Link href="/terms" className="hover:text-gray-700 transition">Terms</Link>
+          <Link href="/privacy" className="hover:text-gray-700 transition">Privacy</Link>
           <span className="h-4 w-px bg-gray-200" aria-hidden="true" />
           {SOCIAL_LINKS.map(({ label, href, icon: Icon }) => (
             <a key={label} href={href} target="_blank" rel="noreferrer" aria-label={label} className="text-gray-400 hover:text-gray-700 transition">
