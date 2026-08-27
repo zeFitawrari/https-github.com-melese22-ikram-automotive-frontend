@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { motion, useReducedMotion } from 'framer-motion';
 import { useAuth } from '@/lib/auth';
 import { useQuery } from '@tanstack/react-query';
 import api from '@/lib/api';
@@ -18,6 +19,8 @@ const TESTIMONIALS = [
 
 export default function Home() {
   const { user, loading } = useAuth();
+  const prefersReducedMotion = useReducedMotion();
+  const revealVariant = { hidden: { opacity: 0, y: 16 }, visible: { opacity: 1, y: 0 } };
   const router = useRouter();
   const { data: serviceData, isLoading: servicesLoading } = useQuery({
     queryKey: ['public-service-catalog'],
@@ -59,7 +62,14 @@ export default function Home() {
         </div>
       </nav>
 
-      <section className="pt-24 pb-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
+      <motion.section
+        className="pt-24 pb-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white"
+        initial={prefersReducedMotion ? { opacity: 1, y: 0 } : 'hidden'}
+        whileInView={prefersReducedMotion ? { opacity: 1, y: 0 } : 'visible'}
+        variants={revealVariant}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: prefersReducedMotion ? 0 : 0.30 }}
+      >
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12 py-12">
           <div className="flex-1 space-y-6">
             <div className="inline-block bg-red-600/20 text-red-400 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">Ethiopia&apos;s #1 EV Workshop</div>
@@ -97,9 +107,17 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
-      <section id="services" className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+      <motion.section
+        id="services"
+        className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50"
+        initial={prefersReducedMotion ? { opacity: 1, y: 0 } : 'hidden'}
+        whileInView={prefersReducedMotion ? { opacity: 1, y: 0 } : 'visible'}
+        variants={revealVariant}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: prefersReducedMotion ? 0 : 0.30 }}
+      >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900">Our Services</h2>
@@ -119,7 +137,17 @@ export default function Home() {
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {services.slice(0, 6).map((service) => (
-                <div key={service.id} className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition">
+                <motion.div
+                  key={service.id}
+                  className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition"
+                  initial={prefersReducedMotion ? { opacity: 1, y: 0 } : 'hidden'}
+                  whileInView={prefersReducedMotion ? { opacity: 1, y: 0 } : 'visible'}
+                  variants={revealVariant}
+                  viewport={{ once: true, amount: 0.15 }}
+                  transition={{ duration: prefersReducedMotion ? 0 : 0.25 }}
+                  whileHover={prefersReducedMotion ? {} : { y: -6, scale: 1.02 }}
+                  aria-roledescription="service card"
+                >
                   <div className="mb-3">
                     <span className="inline-flex items-center justify-center w-12 h-12 bg-gray-50 rounded-md text-xl text-gray-700">🔧</span>
                   </div>
@@ -129,15 +157,22 @@ export default function Home() {
                     <span className="text-sm font-semibold text-gray-900">{service.base_price == null ? 'Contact us' : `${Number(service.base_price).toFixed(2)} ETB`}</span>
                     {service.estimated_minutes ? <span className="text-xs text-gray-400">{service.estimated_minutes} min</span> : null}
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           )}
           <div className="text-center mt-8"><Link href="/pricing" className="inline-flex items-center gap-2 text-sm font-semibold text-red-600 hover:text-red-700">View full pricing catalog <span aria-hidden="true">→</span></Link></div>
         </div>
-      </section>
+      </motion.section>
 
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
+      <motion.section
+        className="py-20 px-4 sm:px-6 lg:px-8"
+        initial={prefersReducedMotion ? { opacity: 1, y: 0 } : 'hidden'}
+        whileInView={prefersReducedMotion ? { opacity: 1, y: 0 } : 'visible'}
+        variants={revealVariant}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: prefersReducedMotion ? 0 : 0.25 }}
+      >
         <div className="max-w-7xl mx-auto text-center">
           <h2 className="text-3xl font-bold text-gray-900 mb-4">How It Works</h2>
           <p className="text-gray-500 mb-12">Book in minutes, track in real-time</p>
@@ -148,35 +183,51 @@ export default function Home() {
               { step: '3', title: 'Track Progress', desc: 'Monitor repairs in real-time from your phone.' },
               { step: '4', title: 'Pay & Drive', desc: 'Pay online or at the workshop. Drive happy!' },
             ].map((item) => (
-              <div key={item.step} className="flex flex-col items-center">
+              <motion.div
+                key={item.step}
+                className="flex flex-col items-center"
+                initial={prefersReducedMotion ? { opacity: 1, y: 0 } : 'hidden'}
+                whileInView={prefersReducedMotion ? { opacity: 1, y: 0 } : 'visible'}
+                variants={revealVariant}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: prefersReducedMotion ? 0 : 0.25 }}
+              >
                 <div className="w-12 h-12 bg-red-600 text-white rounded-full flex items-center justify-center text-lg font-bold mb-3">{item.step}</div>
                 <h4 className="font-semibold text-gray-900 mb-1">{item.title}</h4>
                 <p className="text-sm text-gray-500">{item.desc}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
-      </section>
+      </motion.section>
 
-      <section id="testimonials" className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+      <motion.section
+        id="testimonials"
+        className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50"
+        initial={prefersReducedMotion ? { opacity: 1, y: 0 } : 'hidden'}
+        whileInView={prefersReducedMotion ? { opacity: 1, y: 0 } : 'visible'}
+        variants={revealVariant}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: prefersReducedMotion ? 0 : 0.30 }}
+      >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900">What Our Customers Say</h2>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {TESTIMONIALS.map((t) => (
-              <div key={t.name} className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+              <motion.div key={t.name} className="bg-white rounded-xl p-6 shadow-sm border border-gray-100" initial={prefersReducedMotion ? { opacity: 1, y: 0 } : 'hidden'} whileInView={prefersReducedMotion ? { opacity: 1, y: 0 } : 'visible'} variants={revealVariant} viewport={{ once: true, amount: 0.2 }} transition={{ duration: prefersReducedMotion ? 0 : 0.25 }}>
                 <div className="flex items-center gap-1 text-yellow-500 mb-3" aria-hidden="true">⭐️⭐️⭐️⭐️⭐️</div>
                 <p className="text-gray-600 text-sm mb-4 italic">&ldquo;{t.text}&rdquo;</p>
                 <div>
                   <div className="font-semibold text-gray-900 text-sm">{t.name}</div>
                   <div className="text-xs text-gray-400">{t.role}</div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
-      </section>
+      </motion.section>
 
       <section id="locations" className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center">
@@ -192,7 +243,14 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-900 text-white">
+      <motion.section
+        className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-900 text-white"
+        initial={prefersReducedMotion ? { opacity: 1, y: 0 } : 'hidden'}
+        whileInView={prefersReducedMotion ? { opacity: 1, y: 0 } : 'visible'}
+        variants={revealVariant}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: prefersReducedMotion ? 0 : 0.30 }}
+      >
         <div className="max-w-3xl mx-auto text-center space-y-6">
           <h2 className="text-3xl font-bold">Ready to Service Your Vehicle?</h2>
           <p className="text-gray-400">Book an appointment today and experience transparent, professional auto service.</p>
@@ -200,7 +258,7 @@ export default function Home() {
             Book Now
           </Link>
         </div>
-      </section>
+      </motion.section>
 
       <Footer />
     </div>
