@@ -41,7 +41,6 @@ export function SocketProvider({ children }: { children: ReactNode }) {
       reconnectionDelayMax: 10000,
       timeout: 20000,
       autoConnect: true,
-      forceNew: true,
     });
 
     s.on('connect', () => {
