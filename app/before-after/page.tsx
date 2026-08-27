@@ -51,13 +51,6 @@ export default function BeforeAfterPage() {
   const beforeMedia = byTag('before');
   const afterMedia = byTag('after');
 
-  const curations = jobCards
-    ?.filter((jc: any) => {
-      const cardMedia = mediaData && selectedJobCard === jc.id ? mediaData : [];
-      return false;
-    })
-    ?.slice(0, 0);
-
   const exportData = () => {
     const rows = [
       ['Job Card', 'Customer', 'Vehicle', 'Before Images', 'After Images', 'Status'],
