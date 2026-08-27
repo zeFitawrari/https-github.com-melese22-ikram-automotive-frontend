@@ -21,6 +21,7 @@ import {
   HiOutlineBookOpen,
   HiOutlineUserGroup,
   HiOutlineBanknotes,
+  HiOutlineArrowsRightLeft,
 } from 'react-icons/hi2';
 
 interface NavItem {
@@ -36,6 +37,7 @@ const navItems: NavItem[] = [
   { label: 'Job Cards', href: '/job-cards', icon: <HiOutlineWrenchScrewdriver className="w-5 h-5" />, roles: ['SuperAdmin', 'WorkshopManager', 'Mechanic'] },
   { label: 'Before/After', href: '/before-after', icon: <HiOutlinePhoto className="w-5 h-5" />, roles: ['SuperAdmin', 'WorkshopManager', 'Mechanic'] },
   { label: 'Inventory', href: '/inventory', icon: <HiOutlineCube className="w-5 h-5" />, roles: ['SuperAdmin', 'WorkshopManager', 'Mechanic'] },
+  { label: 'Transfers', href: '/transfers', icon: <HiOutlineArrowsRightLeft className="w-5 h-5" />, roles: ['SuperAdmin', 'WorkshopManager'] },
   { label: 'Notifications', href: '/notifications', icon: <HiOutlineBell className="w-5 h-5" />, roles: ['SuperAdmin', 'WorkshopManager', 'Mechanic'] },
   { label: 'Invoices', href: '/invoices', icon: <HiOutlineDocumentText className="w-5 h-5" />, roles: ['SuperAdmin', 'WorkshopManager', 'Mechanic'] },
   { label: 'Appointments', href: '/appointments', icon: <HiOutlineCalendarDays className="w-5 h-5" />, roles: ['SuperAdmin', 'WorkshopManager', 'Mechanic'] },
