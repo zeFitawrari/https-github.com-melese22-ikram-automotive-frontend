@@ -4,15 +4,10 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/lib/auth';
+import { useQuery } from '@tanstack/react-query';
+import api from '@/lib/api';
 
-const SERVICES = [
-  { icon: '🔋', title: 'EV Diagnostics', desc: 'Full electric vehicle battery, motor, and software diagnostics with real-time health monitoring.' },
-  { icon: '🔧', title: 'General Repair', desc: 'Engine, transmission, brake, and suspension repair by certified technicians.' },
-  { icon: '🎨', title: 'Customization', desc: 'Body kits, wraps, lighting, and performance upgrades tailored to your vision.' },
-  { icon: '⚡', title: 'Charging Solutions', desc: 'Home and commercial EV charger installation and maintenance.' },
-  { icon: '🛞', title: 'Tire & Alignment', desc: 'Tire rotation, balancing, replacement, and precision wheel alignment.' },
-  { icon: '📋', title: 'Maintenance Plans', desc: 'Scheduled maintenance packages to keep your vehicle performing at its best.' },
-];
+type PublicService = { id: string; name: string; description?: string | null; category?: string | null; base_price?: number | string | null; estimated_minutes?: number | null };
 
 const TESTIMONIALS = [
   { name: 'Abrar M.', text: 'Ikram Automotive transformed my Tesla Model 3 with a custom wrap and performance tune. Exceptional quality!', role: 'EV Owner' },
@@ -23,6 +18,10 @@ const TESTIMONIALS = [
 export default function Home() {
   const { user, loading } = useAuth();
   const router = useRouter();
+  const { data: serviceData, isLoading: servicesLoading } = useQuery({
+    queryKey: ['public-service-catalog'],
+    queryFn: async () => (await api.get('/services/public')).data as { services: PublicService[] },
+  });
 
   useEffect(() => {
     if (!loading && user) {
@@ -36,6 +35,8 @@ export default function Home() {
     return <div className="min-h-screen flex items-center justify-center"><div className="animate-pulse text-gray-400">Loading...</div></div>;
   }
   if (user) return null;
+
+  const services = serviceData?.services || [];
 
   return (
     <div className="min-h-screen bg-white">
@@ -101,17 +102,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900">Our Services</h2>
-            <p className="text-gray-500 mt-2 max-w-xl mx-auto">Comprehensive automotive care for electric and traditional vehicles</p>
+            <p className="text-gray-500 mt-2 max-w-xl mx-auto">Comprehensive automotive care with transparent, backend-managed pricing</p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {SERVICES.map((s) => (
-              <div key={s.title} className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition">
-                <div className="text-3xl mb-3">{s.icon}</div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">{s.title}</h3>
-                <p className="text-sm text-gray-500">{s.desc}</p>
-              </div>
-            ))}
-          </div>
+          {servicesLoading ? <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">{Array.from({ length: 6 }).map((_, index) => <div key={index} className="h-44 rounded-xl bg-white border border-gray-100 animate-pulse" />)}</div> : services.length === 0 ? <div className="bg-white rounded-xl p-8 text-center border border-gray-100"><p className="text-gray-500">Our service catalog is being updated.</p><Link href="/pricing" className="inline-flex items-center mt-3 text-sm font-semibold text-red-600 hover:text-red-700">View pricing catalog</Link></div> : <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">{services.slice(0, 6).map((service) => <div key={service.id} className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition"><div className="text-3xl mb-3">🔧</div><h3 className="text-lg font-semibold text-gray-900 mb-2">{service.name}</h3><p className="text-sm text-gray-500 min-h-10">{service.description || service.category || 'Professional automotive service'}</p><div className="flex items-center justify-between mt-4 pt-3 border-t border-gray-100"><span className="text-sm font-semibold text-gray-900">{service.base_price == null ? 'Contact us' : `${Number(service.base_price).toFixed(2)} ETB`}</span>{service.estimated_minutes ? <span className="text-xs text-gray-400">{service.estimated_minutes} min</span> : null}</div></div>)}</div>}
+          <div className="text-center mt-8"><Link href="/pricing" className="inline-flex items-center gap-2 text-sm font-semibold text-red-600 hover:text-red-700">View full pricing catalog <span aria-hidden="true">→</span></Link></div>
         </div>
       </section>
 
