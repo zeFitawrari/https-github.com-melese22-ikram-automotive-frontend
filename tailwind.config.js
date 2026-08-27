@@ -7,17 +7,18 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        // Brand primary: automotive/ev-inspired steel-blue palette
         primary: {
-          50: '#eff6ff',
-          100: '#dbeafe',
-          200: '#bfdbfe',
-          300: '#93c5fd',
-          400: '#60a5fa',
-          500: '#3b82f6',
-          600: '#2563eb',
-          700: '#1d4ed8',
-          800: '#1e40af',
-          900: '#1e3a8a',
+          50: '#f3f8fb',
+          100: '#e6f1f6',
+          200: '#cfe6ee',
+          300: '#9dd1e0',
+          400: '#53b4cc',
+          500: '#0b94b9',
+          600: '#077a93',
+          700: '#05586a',
+          800: '#033a46',
+          900: '#02242b',
         },
         workshop: {
           amber: '#f59e0b',
