@@ -80,6 +80,22 @@ export default function InvoiceDetailPage() {
     onError: (err: any) => toast.error(err.response?.data?.error || 'Payment initiation failed'),
   });
 
+  const downloadPDF = async () => {
+    try {
+      const response = await api.get(`/invoices/${id}/pdf`, { responseType: 'blob' });
+      const url = window.URL.createObjectURL(response.data);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${inv.invoice_number}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (err: any) {
+      toast.error(err.response?.data?.error || 'Failed to download invoice PDF');
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-emerald-50/30">
@@ -249,13 +265,22 @@ export default function InvoiceDetailPage() {
         </div>
 
         <div className="mt-6 text-center">
-          <button
-            onClick={() => window.print()}
-            className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-emerald-600 transition-colors"
-          >
-            <HiOutlinePrinter className="w-4 h-4" />
-            Print Invoice
-          </button>
+          <div className="flex justify-center gap-4">
+            <button
+              onClick={downloadPDF}
+              className="inline-flex items-center gap-1.5 text-sm text-emerald-600 hover:text-emerald-700 transition-colors"
+            >
+              <HiOutlineDocumentText className="w-4 h-4" />
+              Download PDF
+            </button>
+            <button
+              onClick={() => window.print()}
+              className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-emerald-600 transition-colors"
+            >
+              <HiOutlinePrinter className="w-4 h-4" />
+              Print Invoice
+            </button>
+          </div>
         </div>
       </main>
     </div>
