@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useAuth } from '@/lib/auth';
 import { useQuery } from '@tanstack/react-query';
 import api from '@/lib/api';
+import Footer from '@/components/Footer';
 
 type PublicService = { id: string; name: string; description?: string | null; category?: string | null; base_price?: number | string | null; estimated_minutes?: number | null };
 
@@ -174,19 +175,7 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="py-8 px-4 sm:px-6 lg:px-8 border-t border-gray-100">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-400">
-          <div className="flex items-center gap-2">
-            <span>🚗</span>
-            <span className="font-medium text-gray-600">Ikram Automotive</span>
-          </div>
-          <div>© {new Date().getFullYear()} Ikram Automotive. All rights reserved.</div>
-          <div className="flex gap-4">
-            <Link href="/login" className="hover:text-gray-700 transition">Login</Link>
-            <Link href="/book" className="hover:text-gray-700 transition">Book</Link>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
