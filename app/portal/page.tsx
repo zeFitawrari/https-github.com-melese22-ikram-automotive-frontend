@@ -5,11 +5,13 @@ import { useAuth } from '@/lib/auth';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/Navbar';
 import api from '@/lib/api';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { HiOutlineClipboardDocument, HiOutlineStar } from 'react-icons/hi2';
 
 export default function PortalPage() {
   const { user, loading } = useAuth();
   const router = useRouter();
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     if (!loading && (!user || user.role !== 'Customer')) {
@@ -53,6 +55,22 @@ export default function PortalPage() {
     },
     enabled: !!user && user.role === 'Customer',
   });
+
+  const { data: loyalty } = useQuery({
+    queryKey: ['my-loyalty'],
+    queryFn: async () => {
+      const { data } = await api.get('/loyalty/my-loyalty');
+      return data;
+    },
+    enabled: !!user && user.role === 'Customer',
+  });
+
+  const copyReferralCode = async () => {
+    if (!loyalty?.referralCode?.code) return;
+    await navigator.clipboard.writeText(loyalty.referralCode.code);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   if (loading) {
     return (
@@ -107,6 +125,43 @@ export default function PortalPage() {
             <div className="text-xs text-gray-500 uppercase tracking-wider mt-1">Pending Invoices</div>
           </div>
         </div>
+
+        <section className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl border border-amber-200 p-6 mb-6">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5">
+            <div className="flex items-start gap-3">
+              <div className="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center flex-shrink-0">
+                <HiOutlineStar className="w-5 h-5 text-amber-600" />
+              </div>
+              <div>
+                <h2 className="text-lg font-semibold text-gray-900">Loyalty &amp; Referrals</h2>
+                <p className="text-sm text-gray-600 mt-1">
+                  Earn 1 point for every {loyalty?.rules?.etbPerPoint || 10} ETB spent on a completed service. Share your referral code — when a friend completes their first appointment, you both earn {loyalty?.rules?.referralBonusPoints || 100} bonus points.
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-3 sm:items-center">
+              <div className="bg-white rounded-lg border border-amber-200 px-5 py-3 text-center min-w-32">
+                <div className="text-2xl font-bold text-amber-600">{loyalty?.balance ?? 0}</div>
+                <div className="text-xs text-gray-500 uppercase tracking-wider">Points balance</div>
+              </div>
+              <div className="flex items-center gap-2 bg-white rounded-lg border border-amber-200 px-3 py-2">
+                <div>
+                  <div className="text-[10px] text-gray-500 uppercase tracking-wider">Your referral code</div>
+                  <div className="font-mono font-semibold text-gray-900">{loyalty?.referralCode?.code || 'Loading...'}</div>
+                </div>
+                <button
+                  type="button"
+                  onClick={copyReferralCode}
+                  disabled={!loyalty?.referralCode?.code}
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-amber-700 hover:text-amber-800 disabled:opacity-40"
+                >
+                  <HiOutlineClipboardDocument className="w-4 h-4" />
+                  {copied ? 'Copied!' : 'Copy'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           <div className="bg-white rounded-xl border border-gray-200 p-6">
