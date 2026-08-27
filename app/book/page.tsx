@@ -149,6 +149,7 @@ export default function PublicBookPage() {
               <label htmlFor="create-account" className="text-sm text-gray-700">
                 <span className="font-medium text-gray-900">Create an Ikram account for this phone number</span>
                 <span className="mt-1 block text-xs text-gray-500">We&apos;ll create your Ikram account with this phone number so you can track this booking.</span>
+                <span className="mt-2 block text-xs text-gray-500">By creating an account you agree to our <Link href="/terms" className="underline">Terms of Service</Link> and <Link href="/privacy" className="underline">Privacy Policy</Link>.</span>
               </label>
             </div>
           </div>
