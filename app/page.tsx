@@ -44,7 +44,7 @@ export default function Home() {
       <nav className="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
           <div className="flex items-center gap-2">
-            <span className="text-2xl">🚗</span>
+            <span className="inline-flex items-center justify-center w-9 h-9 bg-red-50 text-red-600 rounded-md text-lg shadow-sm" aria-hidden="true">🚗</span>
             <span className="text-xl font-bold text-gray-900">Ikram Automotive</span>
           </div>
           <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
@@ -85,7 +85,7 @@ export default function Home() {
           </div>
           <div className="flex-1 bg-gray-800/50 rounded-2xl p-8 border border-gray-700 max-w-md w-full">
             <div className="text-center space-y-4">
-              <div className="text-5xl">🔋</div>
+              <div className="mx-auto w-20 h-20 bg-gradient-to-tr from-red-600/10 to-red-600/5 rounded-xl flex items-center justify-center text-5xl text-red-400 shadow-inner">🔋</div>
               <h3 className="text-xl font-bold">EV-Ready Workshop</h3>
               <p className="text-gray-400 text-sm">Specialized in Tesla, BYD, and all major EV brands with certified high-voltage technicians.</p>
               <div className="grid grid-cols-2 gap-3 text-sm pt-2">
@@ -105,7 +105,34 @@ export default function Home() {
             <h2 className="text-3xl font-bold text-gray-900">Our Services</h2>
             <p className="text-gray-500 mt-2 max-w-xl mx-auto">Comprehensive automotive care with transparent, backend-managed pricing</p>
           </div>
-          {servicesLoading ? <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">{Array.from({ length: 6 }).map((_, index) => <div key={index} className="h-44 rounded-xl bg-white border border-gray-100 animate-pulse" />)}</div> : services.length === 0 ? <div className="bg-white rounded-xl p-8 text-center border border-gray-100"><p className="text-gray-500">Our service catalog is being updated.</p><Link href="/pricing" className="inline-flex items-center mt-3 text-sm font-semibold text-red-600 hover:text-red-700">View pricing catalog</Link></div> : <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">{services.slice(0, 6).map((service) => <div key={service.id} className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition"><div className="text-3xl mb-3">🔧</div><h3 className="text-lg font-semibold text-gray-900 mb-2">{service.name}</h3><p className="text-sm text-gray-500 min-h-10">{service.description || service.category || 'Professional automotive service'}</p><div className="flex items-center justify-between mt-4 pt-3 border-t border-gray-100"><span className="text-sm font-semibold text-gray-900">{service.base_price == null ? 'Contact us' : `${Number(service.base_price).toFixed(2)} ETB`}</span>{service.estimated_minutes ? <span className="text-xs text-gray-400">{service.estimated_minutes} min</span> : null}</div></div>)}</div>}
+          {servicesLoading ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {Array.from({ length: 6 }).map((_, index) => (
+                <div key={index} className="h-44 rounded-xl bg-white border border-gray-100 animate-pulse" />
+              ))}
+            </div>
+          ) : services.length === 0 ? (
+            <div className="bg-white rounded-xl p-8 text-center border border-gray-100">
+              <p className="text-gray-500">Our service catalog is being updated.</p>
+              <Link href="/pricing" className="inline-flex items-center mt-3 text-sm font-semibold text-red-600 hover:text-red-700">View pricing catalog</Link>
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {services.slice(0, 6).map((service) => (
+                <div key={service.id} className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition">
+                  <div className="mb-3">
+                    <span className="inline-flex items-center justify-center w-12 h-12 bg-gray-50 rounded-md text-xl text-gray-700">🔧</span>
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">{service.name}</h3>
+                  <p className="text-sm text-gray-500 min-h-10">{service.description || service.category || 'Professional automotive service'}</p>
+                  <div className="flex items-center justify-between mt-4 pt-3 border-t border-gray-100">
+                    <span className="text-sm font-semibold text-gray-900">{service.base_price == null ? 'Contact us' : `${Number(service.base_price).toFixed(2)} ETB`}</span>
+                    {service.estimated_minutes ? <span className="text-xs text-gray-400">{service.estimated_minutes} min</span> : null}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
           <div className="text-center mt-8"><Link href="/pricing" className="inline-flex items-center gap-2 text-sm font-semibold text-red-600 hover:text-red-700">View full pricing catalog <span aria-hidden="true">→</span></Link></div>
         </div>
       </section>
@@ -139,7 +166,7 @@ export default function Home() {
           <div className="grid md:grid-cols-3 gap-6">
             {TESTIMONIALS.map((t) => (
               <div key={t.name} className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-                <div className="flex items-center gap-1 text-yellow-500 mb-3">★★★★★</div>
+                <div className="flex items-center gap-1 text-yellow-500 mb-3" aria-hidden="true">⭐️⭐️⭐️⭐️⭐️</div>
                 <p className="text-gray-600 text-sm mb-4 italic">&ldquo;{t.text}&rdquo;</p>
                 <div>
                   <div className="font-semibold text-gray-900 text-sm">{t.name}</div>
@@ -156,11 +183,11 @@ export default function Home() {
           <h2 className="text-3xl font-bold text-gray-900 mb-4">Visit Us</h2>
           <p className="text-gray-500 mb-8">Conveniently located in Addis Ababa</p>
           <div className="bg-gray-100 rounded-xl p-8 max-w-2xl mx-auto">
-            <div className="text-4xl mb-4">📍</div>
+            <div className="mx-auto mb-4 w-12 h-12 bg-red-50 rounded-full flex items-center justify-center text-2xl text-red-500">📍</div>
             <h3 className="text-lg font-semibold text-gray-900">Ikram Automotive Workshop</h3>
             <p className="text-gray-500 text-sm mt-1">Bole Road, Addis Ababa, Ethiopia</p>
             <p className="text-gray-500 text-sm">Open Mon–Sat: 8:00 AM – 5:00 PM</p>
-            <p className="text-gray-500 text-sm mt-2">📞 +251 911 111 112 &nbsp;|&nbsp; ✉️ info@ikramauto.com</p>
+            <p className="text-gray-500 text-sm mt-2"><span className="inline-flex items-center justify-center w-5 h-5 bg-gray-200 rounded-sm text-sm mr-2">📞</span>+251 911 111 112 &nbsp;|&nbsp; <span className="inline-flex items-center justify-center w-5 h-5 bg-gray-200 rounded-sm text-sm mr-2">✉️</span>info@ikramauto.com</p>
           </div>
         </div>
       </section>
