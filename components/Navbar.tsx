@@ -3,6 +3,7 @@
 import { useAuth } from '@/lib/auth';
 import { useRouter, usePathname } from 'next/navigation';
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 import {
   HiOutlineBars3,
   HiOutlineXMark,
@@ -24,6 +25,7 @@ import {
   HiOutlineArrowsRightLeft,
   HiOutlineGift,
 } from 'react-icons/hi2';
+import { FaTiktok, FaYoutube } from 'react-icons/fa6';
 
 interface NavItem {
   label: string;
@@ -128,6 +130,34 @@ export default function Navbar() {
           <HiOutlineArrowRightOnRectangle className="w-4 h-4" />
           Logout
         </button>
+        <div className="mt-6 pt-6 border-t border-gray-200">
+          <div className="flex items-center justify-between mb-4">
+            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Follow us</p>
+            <div className="flex items-center gap-3">
+              <motion.a
+                href="https://www.tiktok.com/@ikram_automotive"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="TikTok"
+                whileHover={{ y: -2, scale: 1.1 }}
+                className="w-9 h-9 rounded-xl bg-gray-100 flex items-center justify-center text-black hover:bg-black hover:text-white transition-all duration-300 shadow-sm hover:shadow-md"
+              >
+                <FaTiktok className="w-5 h-5" />
+              </motion.a>
+              <motion.a
+                href="https://m.youtube.com/@IkramIdris-ij4rz"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="YouTube"
+                whileHover={{ y: -2, scale: 1.1 }}
+                className="w-9 h-9 rounded-xl bg-gray-100 flex items-center justify-center text-red-600 hover:bg-red-600 hover:text-white transition-all duration-300 shadow-sm hover:shadow-md"
+              >
+                <FaYoutube className="w-5 h-5" />
+              </motion.a>
+            </div>
+          </div>
+          <p className="text-[10px] text-gray-400 uppercase tracking-wider">Ikram Automotive · Addis Ababa, Ethiopia</p>
+        </div>
       </div>
     </div>
   );

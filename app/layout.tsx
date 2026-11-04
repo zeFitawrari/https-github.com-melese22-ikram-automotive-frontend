@@ -9,6 +9,15 @@ const poppins = Poppins({ subsets: ['latin'], weight: ['400', '600', '700'], var
 export const metadata: Metadata = {
   title: 'Ikram Automotive Workshop',
   description: 'EV-Centric Workshop & Customization Management System',
+  metadataBase: new URL('https://ikramautomotive.com'),
+  openGraph: {
+    images: ['/og-image.png'],
+  },
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 5,
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

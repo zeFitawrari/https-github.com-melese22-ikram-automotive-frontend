@@ -8,6 +8,7 @@ import { useAuth } from '@/lib/auth';
 import { useQuery } from '@tanstack/react-query';
 import api from '@/lib/api';
 import Footer from '@/components/Footer';
+import { FaMapLocationDot, FaClock } from 'react-icons/fa6';
 
 type PublicService = { id: string; name: string; description?: string | null; category?: string | null; base_price?: number | string | null; estimated_minutes?: number | null };
 
@@ -63,49 +64,104 @@ export default function Home() {
       </nav>
 
       <motion.section
-        className="pt-24 pb-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white"
+        className="pt-24 pb-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
         initial={prefersReducedMotion ? { opacity: 1, y: 0 } : 'hidden'}
         whileInView={prefersReducedMotion ? { opacity: 1, y: 0 } : 'visible'}
         variants={revealVariant}
         viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: prefersReducedMotion ? 0 : 0.30 }}
+        transition={{ duration: prefersReducedMotion ? 0 : 0.4 }}
       >
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12 py-12">
-          <div className="flex-1 space-y-6">
-            <div className="inline-block bg-red-600/20 text-red-400 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">Ethiopia&apos;s #1 EV Workshop</div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight">
-              Expert Auto Repair<br /><span className="text-red-500">& EV Service</span>
+        {/* Decorative background blobs */}
+        <div className="absolute top-0 left-1/4 -translate-x-1/2 w-[600px] h-[600px] bg-red-500/10 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-0 right-1/4 -translate-x-1/2 w-[700px] h-[700px] bg-primary-500/10 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-red-500/5 rounded-full blur-[80px] pointer-events-none" />
+        <div className="max-w-7xl mx-auto relative z-10 flex flex-col lg:flex-row items-center gap-12 py-12">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            className="flex-1 space-y-6"
+          >
+            <div className="inline-flex items-center gap-2 bg-red-600/20 text-red-400 text-xs font-semibold px-3 py-1.5 rounded-full uppercase tracking-wider border border-red-500/20 backdrop-blur-sm">
+              <span className="w-1.5 h-1.5 bg-red-400 rounded-full animate-pulse" />
+              Ethiopia&apos;s #1 EV Workshop
+            </div>
+            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold leading-tight text-white">
+              Expert Auto<span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-primary-500 to-red-500"> Repair</span><br />
+              &amp; EV Service
             </h1>
-            <p className="text-lg text-gray-300 max-w-lg">
-              From diagnostics to full customization — trust Ikram Automotive for professional vehicle service with real-time tracking and transparent pricing.
+            <p className="text-lg text-gray-300 max-w-lg leading-relaxed">
+              From precision diagnostics to full customization — trust Ikram Automotive for professional vehicle service with real-time tracking, transparent pricing, and certified EV technicians.
             </p>
-            <div className="flex flex-wrap gap-4">
-              <Link href="/book" className="bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-3 rounded-lg transition text-center">
-                Book Appointment
+            <div className="flex flex-wrap gap-4 pt-2">
+              <Link
+                href="/book"
+                className="group relative inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white font-semibold px-8 py-3.5 rounded-xl transition-all duration-300 shadow-lg shadow-red-500/25 hover:shadow-red-500/40 hover:-translate-y-1"
+              >
+                <span>Book Appointment</span>
+                <span className="text-sm">→</span>
               </Link>
-              <a href="#services" className="border border-gray-600 hover:border-gray-400 text-gray-300 font-semibold px-6 py-3 rounded-lg transition text-center">
-                Our Services
+              <a
+                href="#services"
+                className="group relative inline-flex items-center gap-2 border border-white/20 hover:border-white/40 text-gray-300 hover:text-white font-semibold px-8 py-3.5 rounded-xl transition-all duration-300 bg-white/5 hover:bg-white/10 backdrop-blur-sm"
+              >
+                <span>Our Services</span>
+                <span className="text-sm">→</span>
               </a>
             </div>
-            <div className="flex gap-8 pt-4">
-              <div><div className="text-2xl font-bold">500+</div><div className="text-sm text-gray-400">Vehicles Serviced</div></div>
-              <div><div className="text-2xl font-bold">98%</div><div className="text-sm text-gray-400">Customer Satisfaction</div></div>
-              <div><div className="text-2xl font-bold">24/7</div><div className="text-sm text-gray-400">Job Tracking</div></div>
-            </div>
-          </div>
-          <div className="flex-1 bg-gray-800/50 rounded-2xl p-8 border border-gray-700 max-w-md w-full">
-            <div className="text-center space-y-4">
-              <div className="mx-auto w-20 h-20 bg-gradient-to-tr from-red-600/10 to-red-600/5 rounded-xl flex items-center justify-center text-5xl text-red-400 shadow-inner">🔋</div>
-              <h3 className="text-xl font-bold">EV-Ready Workshop</h3>
-              <p className="text-gray-400 text-sm">Specialized in Tesla, BYD, and all major EV brands with certified high-voltage technicians.</p>
-              <div className="grid grid-cols-2 gap-3 text-sm pt-2">
-                <div className="bg-gray-700/50 rounded-lg p-3 text-center"><div className="font-semibold">Battery Health</div><div className="text-xs text-gray-400">Full diagnostics</div></div>
-                <div className="bg-gray-700/50 rounded-lg p-3 text-center"><div className="font-semibold">Motor Service</div><div className="text-xs text-gray-400">Performance tuning</div></div>
-                <div className="bg-gray-700/50 rounded-lg p-3 text-center"><div className="font-semibold">Software Update</div><div className="text-xs text-gray-400">OTA management</div></div>
-                <div className="bg-gray-700/50 rounded-lg p-3 text-center"><div className="font-semibold">Charging</div><div className="text-xs text-gray-400">Installation & repair</div></div>
+            <div className="flex gap-6 pt-8">
+              <div className="flex flex-col">
+                <div className="text-3xl font-bold text-white">500+</div>
+                <div className="text-xs text-gray-400 uppercase tracking-wider">Vehicles Serviced</div>
+              </div>
+              <div className="flex flex-col">
+                <div className="text-3xl font-bold text-white">98%</div>
+                <div className="text-xs text-gray-400 uppercase tracking-wider">Customer Satisfaction</div>
+              </div>
+              <div className="flex flex-col">
+                <div className="text-3xl font-bold text-white">24/7</div>
+                <div className="text-xs text-gray-400 uppercase tracking-wider">Job Tracking</div>
               </div>
             </div>
-          </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="flex-1 max-w-md w-full relative"
+          >
+            <div className="bg-white/10 backdrop-blur-xl rounded-3xl border border-white/20 p-8 shadow-2xl relative overflow-hidden group">
+              <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-red-500 via-primary-500 to-red-500" />
+              <div className="relative z-10 flex flex-col items-center gap-4">
+                <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-red-500/20 to-primary-500/20 flex items-center justify-center text-4xl border border-white/10 group-hover:scale-110 transition-transform duration-500">
+                  <span>🔋</span>
+                </div>
+                <h3 className="text-xl font-bold text-white">EV-Ready Workshop</h3>
+                <p className="text-sm text-gray-400 text-center max-w-xs">
+                  Specialized in Tesla, BYD, and all major EV brands with certified high-voltage technicians.
+                </p>
+              </div>
+              <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="bg-white/5 rounded-xl p-4 text-center border border-white/10 hover:bg-white/10 transition-colors group-hover:border-primary-500/50">
+                  <div className="font-semibold text-white">Battery Health</div>
+                  <div className="text-xs text-gray-400 mt-1">Full diagnostics</div>
+                </div>
+                <div className="bg-white/5 rounded-xl p-4 text-center border border-white/10 hover:bg-white/10 transition-colors group-hover:border-primary-500/50">
+                  <div className="font-semibold text-white">Motor Service</div>
+                  <div className="text-xs text-gray-400 mt-1">Performance tuning</div>
+                </div>
+                <div className="bg-white/5 rounded-xl p-4 text-center border border-white/10 hover:bg-white/10 transition-colors group-hover:border-primary-500/50">
+                  <div className="font-semibold text-white">Software Update</div>
+                  <div className="text-xs text-gray-400 mt-1">OTA management</div>
+                </div>
+                <div className="bg-white/5 rounded-xl p-4 text-center border border-white/10 hover:bg-white/10 transition-colors group-hover:border-primary-500/50">
+                  <div className="font-semibold text-white">Charging</div>
+                  <div className="text-xs text-gray-400 mt-1">Installation & repair</div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </motion.section>
 
@@ -124,7 +180,7 @@ export default function Home() {
             <p className="text-gray-500 mt-2 max-w-xl mx-auto">Comprehensive automotive care with transparent, backend-managed pricing</p>
           </div>
           {servicesLoading ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
               {Array.from({ length: 6 }).map((_, index) => (
                 <div key={index} className="h-44 rounded-xl bg-white border border-gray-100 animate-pulse" />
               ))}
@@ -135,7 +191,7 @@ export default function Home() {
               <Link href="/pricing" className="inline-flex items-center mt-3 text-sm font-semibold text-red-600 hover:text-red-700">View pricing catalog</Link>
             </div>
           ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
               {services.slice(0, 6).map((service) => (
                 <motion.div
                   key={service.id}
@@ -176,7 +232,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto text-center">
           <h2 className="text-3xl font-bold text-gray-900 mb-4">How It Works</h2>
           <p className="text-gray-500 mb-12">Book in minutes, track in real-time</p>
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
             {[
               { step: '1', title: 'Book Online', desc: 'Choose your service and preferred time slot.' },
               { step: '2', title: 'Drop Off', desc: 'Bring your vehicle to the workshop.' },
@@ -214,7 +270,7 @@ export default function Home() {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900">What Our Customers Say</h2>
           </div>
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {TESTIMONIALS.map((t) => (
               <motion.div key={t.name} className="bg-white rounded-xl p-6 shadow-sm border border-gray-100" initial={prefersReducedMotion ? { opacity: 1, y: 0 } : 'hidden'} whileInView={prefersReducedMotion ? { opacity: 1, y: 0 } : 'visible'} variants={revealVariant} viewport={{ once: true, amount: 0.2 }} transition={{ duration: prefersReducedMotion ? 0 : 0.25 }}>
                 <div className="flex items-center gap-1 text-yellow-500 mb-3" aria-hidden="true">⭐️⭐️⭐️⭐️⭐️</div>
@@ -229,18 +285,112 @@ export default function Home() {
         </div>
       </motion.section>
 
-      <section id="locations" className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Visit Us</h2>
-          <p className="text-gray-500 mb-8">Conveniently located in Addis Ababa</p>
-          <div className="bg-gray-100 rounded-xl p-8 max-w-2xl mx-auto">
-            <div className="mx-auto mb-4 w-12 h-12 bg-red-50 rounded-full flex items-center justify-center text-2xl text-red-500">📍</div>
-            <h3 className="text-lg font-semibold text-gray-900">Ikram Automotive Workshop</h3>
-            <p className="text-gray-500 text-sm mt-1">Bole Road, Addis Ababa, Ethiopia</p>
-            <p className="text-gray-500 text-sm">Open Mon–Sat: 8:00 AM – 5:00 PM</p>
-            <p className="text-gray-500 text-sm mt-2"><span className="inline-flex items-center justify-center w-5 h-5 bg-gray-200 rounded-sm text-sm mr-2">📞</span>+251 911 111 112 &nbsp;|&nbsp; <span className="inline-flex items-center justify-center w-5 h-5 bg-gray-200 rounded-sm text-sm mr-2">✉️</span>info@ikramauto.com</p>
+      <section id="locations" className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        {/* Background decoration */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1200px] h-[600px] bg-red-500/10 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-0 right-1/2 -translate-x-1/2 w-full max-w-[1200px] h-[600px] bg-primary-500/10 rounded-full blur-[120px] pointer-events-none" />
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.5 }}
+          className="max-w-7xl mx-auto text-center relative z-10"
+        >
+          <div className="flex items-center justify-center gap-2 mb-3">
+            <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+            <h2 className="text-3xl font-bold text-gray-900 tracking-tight">Visit Us</h2>
+            <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }} />
           </div>
-        </div>
+          <p className="text-primary-600 font-semibold text-sm uppercase tracking-wider mb-8">Conveniently located in Addis Ababa</p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1, duration: 0.5 }}
+            className="bg-white/80 backdrop-blur-xl rounded-3xl border border-white/60 p-8 sm:p-10 max-w-2xl mx-auto shadow-2xl relative overflow-hidden"
+          >
+            {/* Decorative top border */}
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-red-500 to-primary-500" />
+
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center text-2xl shadow-lg shadow-red-500/30">📍</div>
+              <div>
+                <h3 className="text-xl font-bold text-gray-900 leading-tight">Ikram Automotive<br/><span className="text-primary-500">Workshop</span></h3>
+                <p className="text-xs text-gray-400 font-medium mt-1">Addis Ababa, Ethiopia</p>
+              </div>
+            </div>
+
+            <div className="space-y-4 mb-8">
+              <div className="flex items-center justify-center gap-3 px-4">
+                <FaMapLocationDot className="w-5 h-5 text-primary-500" />
+                <a
+                  href="https://maps.app.goo.gl/NeKWiXeiqiGy25pF6"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm font-medium text-primary-600 hover:text-primary-500 hover:underline transition-colors"
+                >
+                  Bole Road, Addis Ababa, Ethiopia
+                </a>
+                <motion.a
+                  href="https://maps.app.goo.gl/NeKWiXeiqiGy25pF6"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.05 }}
+                  className="ml-2 p-2 rounded-lg bg-gray-100 text-primary-600 hover:bg-primary-500 hover:text-white transition-colors"
+                  aria-label="Open in Maps"
+                >
+                  <span className="text-xs">🔗</span>
+                </motion.a>
+              </div>
+              <div className="flex items-center justify-center gap-3 px-4">
+                <FaClock className="w-5 h-5 text-primary-500" />
+                <span className="text-sm text-gray-600">Open Mon–Sat: 8:00 AM – 5:00 PM</span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 px-4 mb-8">
+              <div className="flex items-center gap-3 p-3 rounded-2xl bg-gray-50 border border-gray-100">
+                <div className="w-8 h-8 rounded-lg bg-gray-200 flex items-center justify-center text-gray-600">📞</div>
+                <div>
+                  <div className="text-xs text-gray-400 uppercase tracking-wider">Phone</div>
+                  <a href="tel:+251911111112" className="text-sm font-semibold text-gray-900 hover:text-primary-600 transition-colors">+251 911 111 112</a>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 p-3 rounded-2xl bg-gray-50 border border-gray-100">
+                <div className="w-8 h-8 rounded-lg bg-gray-200 flex items-center justify-center text-gray-600">✉️</div>
+                <div>
+                  <div className="text-xs text-gray-400 uppercase tracking-wider">Email</div>
+                  <a href="mailto:info@ikramauto.com" className="text-sm font-semibold text-gray-900 hover:text-primary-600 transition-colors">info@ikramauto.com</a>
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-6 border-t border-gray-100">
+              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">Follow our journey</p>
+              <div className="flex items-center justify-center gap-4">
+                <motion.a
+                  href="https://www.tiktok.com/@ikram_automotive"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ y: -4, scale: 1.05 }}
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-black text-white text-sm font-medium shadow-lg shadow-black/20 hover:shadow-black/30 transition-all duration-300"
+                >
+                  <span className="text-xs">🎵</span> TikTok
+                </motion.a>
+                <motion.a
+                  href="https://m.youtube.com/@IkramIdris-ij4rz"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ y: -4, scale: 1.05 }}
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-red-600 text-white text-sm font-medium shadow-lg shadow-red-500/30 hover:shadow-red-500/50 hover:-translate-y-1 transition-all duration-300"
+                >
+                  <span className="text-xs">▶️</span> YouTube
+                </motion.a>
+              </div>
+            </div>
+          </div>
+        </motion.div>
       </section>
 
       <motion.section
