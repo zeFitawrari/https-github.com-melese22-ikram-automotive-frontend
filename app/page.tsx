@@ -10,12 +10,31 @@ import api from '@/lib/api';
 import Footer from '@/components/Footer';
 import { FaMapLocationDot, FaClock } from 'react-icons/fa6';
 
-type PublicService = { id: string; name: string; description?: string | null; category?: string | null; base_price?: number | string | null; estimated_minutes?: number | null };
+type PublicService = {
+  id: string;
+  name: string;
+  description?: string | null;
+  category?: string | null;
+  base_price?: number | string | null;
+  estimated_minutes?: number | null;
+};
 
 const TESTIMONIALS = [
-  { name: 'Abrar M.', text: 'Ikram Automotive transformed my Tesla Model 3 with a custom wrap and performance tune. Exceptional quality!', role: 'EV Owner' },
-  { name: 'Daniel K.', text: 'Best workshop in Addis for both EV and traditional vehicles. The real-time job tracking gives me peace of mind.', role: 'Fleet Manager' },
-  { name: 'Sara T.', text: 'Quick diagnostics, fair pricing, and they kept me updated every step. Highly recommend for any auto service.', role: 'Customer' },
+  {
+    name: 'Abrar M.',
+    text: "Ikram Automotive transformed my Tesla Model 3 with a custom wrap and performance tune. Exceptional quality!",
+    role: 'EV Owner',
+  },
+  {
+    name: 'Daniel K.',
+    text: 'Best workshop in Addis for both EV and traditional vehicles. The real-time job tracking gives me peace of mind.',
+    role: 'Fleet Manager',
+  },
+  {
+    name: 'Sara T.',
+    text: 'Quick diagnostics, fair pricing, and they kept me updated every step. Highly recommend for any auto service.',
+    role: 'Customer',
+  },
 ];
 
 export default function Home() {
@@ -37,7 +56,11 @@ export default function Home() {
   }, [user, loading, router]);
 
   if (loading) {
-    return <div className="min-h-screen flex items-center justify-center"><div className="animate-pulse text-gray-400">Loading...</div></div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-pulse text-gray-400">Loading...</div>
+      </div>
+    );
   }
   if (user) return null;
 
@@ -48,17 +71,29 @@ export default function Home() {
       <nav className="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
           <div className="flex items-center gap-2">
-            <span className="inline-flex items-center justify-center w-9 h-9 bg-red-50 text-red-600 rounded-md text-lg shadow-sm" aria-hidden="true">🚗</span>
+            <span className="inline-flex items-center justify-center w-9 h-9 bg-red-50 text-red-600 rounded-md text-lg shadow-sm" aria-hidden="true">
+              🚗
+            </span>
             <span className="text-xl font-bold text-gray-900">Ikram Automotive</span>
           </div>
           <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
-            <a href="#services" className="hover:text-gray-900 transition">Services</a>
-            <a href="#testimonials" className="hover:text-gray-900 transition">Testimonials</a>
-            <a href="#locations" className="hover:text-gray-900 transition">Locations</a>
+            <a href="#services" className="hover:text-gray-900 transition">
+              Services
+            </a>
+            <a href="#testimonials" className="hover:text-gray-900 transition">
+              Testimonials
+            </a>
+            <a href="#locations" className="hover:text-gray-900 transition">
+              Locations
+            </a>
           </div>
           <div className="flex items-center gap-3">
-            <Link href="/login" className="text-sm font-medium text-gray-700 hover:text-gray-900 transition px-3 py-2">Login</Link>
-            <Link href="/book" className="bg-red-600 text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-red-700 transition">Book Now</Link>
+            <Link href="/login" className="text-sm font-medium text-gray-700 hover:text-gray-900 transition px-3 py-2">
+              Login
+            </Link>
+            <Link href="/book" className="bg-red-600 text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-red-700 transition">
+              Book Now
+            </Link>
           </div>
         </div>
       </nav>
@@ -84,10 +119,13 @@ export default function Home() {
           >
             <div className="inline-flex items-center gap-2 bg-red-600/20 text-red-400 text-xs font-semibold px-3 py-1.5 rounded-full uppercase tracking-wider border border-red-500/20 backdrop-blur-sm">
               <span className="w-1.5 h-1.5 bg-red-400 rounded-full animate-pulse" />
-              Ethiopia&apos;s #1 EV Workshop
+              Ethiopia's #1 EV Workshop
             </div>
             <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold leading-tight text-white">
-              Expert Auto<span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-primary-500 to-red-500"> Repair</span><br />
+              Expert Auto<span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-primary-500 to-red-500">
+                Repair
+              </span>
+              <br />
               &amp; EV Service
             </h1>
             <p className="text-lg text-gray-300 max-w-lg leading-relaxed">
@@ -157,7 +195,7 @@ export default function Home() {
                 </div>
                 <div className="bg-white/5 rounded-xl p-4 text-center border border-white/10 hover:bg-white/10 transition-colors group-hover:border-primary-500/50">
                   <div className="font-semibold text-white">Charging</div>
-                  <div className="text-xs text-gray-400 mt-1">Installation & repair</div>
+                  <div className="text-xs text-gray-400 mt-1">Installation &amp; repair</div>
                 </div>
               </div>
             </div>
@@ -177,7 +215,9 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900">Our Services</h2>
-            <p className="text-gray-500 mt-2 max-w-xl mx-auto">Comprehensive automotive care with transparent, backend-managed pricing</p>
+            <p className="text-gray-500 mt-2 max-w-xl mx-auto">
+              Comprehensive automotive care with transparent, backend-managed pricing
+            </p>
           </div>
           {servicesLoading ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
@@ -188,7 +228,9 @@ export default function Home() {
           ) : services.length === 0 ? (
             <div className="bg-white rounded-xl p-8 text-center border border-gray-100">
               <p className="text-gray-500">Our service catalog is being updated.</p>
-              <Link href="/pricing" className="inline-flex items-center mt-3 text-sm font-semibold text-red-600 hover:text-red-700">View pricing catalog</Link>
+              <Link href="/pricing" className="inline-flex items-center mt-3 text-sm font-semibold text-red-600 hover:text-red-700">
+                View pricing catalog
+              </Link>
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
@@ -205,19 +247,33 @@ export default function Home() {
                   aria-roledescription="service card"
                 >
                   <div className="mb-3">
-                    <span className="inline-flex items-center justify-center w-12 h-12 bg-gray-50 rounded-md text-xl text-gray-700">🔧</span>
+                    <span className="inline-flex items-center justify-center w-12 h-12 bg-gray-50 rounded-md text-xl text-gray-700">
+                      🔧
+                    </span>
                   </div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">{service.name}</h3>
-                  <p className="text-sm text-gray-500 min-h-10">{service.description || service.category || 'Professional automotive service'}</p>
+                  <p className="text-sm text-gray-500 min-h-10">
+                    {service.description || service.category || 'Professional automotive service'}
+                  </p>
                   <div className="flex items-center justify-between mt-4 pt-3 border-t border-gray-100">
-                    <span className="text-sm font-semibold text-gray-900">{service.base_price == null ? 'Contact us' : `${Number(service.base_price).toFixed(2)} ETB`}</span>
-                    {service.estimated_minutes ? <span className="text-xs text-gray-400">{service.estimated_minutes} min</span> : null}
+                    <span className="text-sm font-semibold text-gray-900">
+                      {service.base_price == null ? 'Contact us' : `${Number(service.base_price).toFixed(2)} ETB`}
+                    </span>
+                    {service.estimated_minutes ? (
+                      <span className="text-xs text-gray-400">
+                        {service.estimated_minutes} min
+                      </span>
+                    ) : null}
                   </div>
                 </motion.div>
               ))}
             </div>
           )}
-          <div className="text-center mt-8"><Link href="/pricing" className="inline-flex items-center gap-2 text-sm font-semibold text-red-600 hover:text-red-700">View full pricing catalog <span aria-hidden="true">→</span></Link></div>
+          <div className="text-center mt-8">
+            <Link href="/pricing" className="inline-flex items-center gap-2 text-sm font-semibold text-red-600 hover:text-red-700">
+              View full pricing catalog <span aria-hidden="true">→</span>
+            </Link>
+          </div>
         </div>
       </motion.section>
 
@@ -248,7 +304,9 @@ export default function Home() {
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: prefersReducedMotion ? 0 : 0.25 }}
               >
-                <div className="w-12 h-12 bg-red-600 text-white rounded-full flex items-center justify-center text-lg font-bold mb-3">{item.step}</div>
+                <div className="w-12 h-12 bg-red-600 text-white rounded-full flex items-center justify-center text-lg font-bold mb-3">
+                  {item.step}
+                </div>
                 <h4 className="font-semibold text-gray-900 mb-1">{item.title}</h4>
                 <p className="text-sm text-gray-500">{item.desc}</p>
               </motion.div>
@@ -272,9 +330,21 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {TESTIMONIALS.map((t) => (
-              <motion.div key={t.name} className="bg-white rounded-xl p-6 shadow-sm border border-gray-100" initial={prefersReducedMotion ? { opacity: 1, y: 0 } : 'hidden'} whileInView={prefersReducedMotion ? { opacity: 1, y: 0 } : 'visible'} variants={revealVariant} viewport={{ once: true, amount: 0.2 }} transition={{ duration: prefersReducedMotion ? 0 : 0.25 }}>
-                <div className="flex items-center gap-1 text-yellow-500 mb-3" aria-hidden="true">⭐️⭐️⭐️⭐️⭐️</div>
-                <p className="text-gray-600 text-sm mb-4 italic">&ldquo;{t.text}&rdquo;</p>
+              <motion.div
+                key={t.name}
+                className="bg-white rounded-xl p-6 shadow-sm border border-gray-100"
+                initial={prefersReducedMotion ? { opacity: 1, y: 0 } : 'hidden'}
+                whileInView={prefersReducedMotion ? { opacity: 1, y: 0 } : 'visible'}
+                variants={revealVariant}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: prefersReducedMotion ? 0 : 0.25 }}
+              >
+                <div className="flex items-center gap-1 text-yellow-500 mb-3" aria-hidden="true">
+                  ⭐️⭐️⭐️⭐️⭐️
+                </div>
+                <p className="text-gray-600 text-sm mb-4 italic">
+                  &ldquo;{t.text}&rdquo;
+                </p>
                 <div>
                   <div className="font-semibold text-gray-900 text-sm">{t.name}</div>
                   <div className="text-xs text-gray-400">{t.role}</div>
@@ -302,7 +372,9 @@ export default function Home() {
             <h2 className="text-3xl font-bold text-gray-900 tracking-tight">Visit Us</h2>
             <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }} />
           </div>
-          <p className="text-primary-600 font-semibold text-sm uppercase tracking-wider mb-8">Conveniently located in Addis Ababa</p>
+          <p className="text-primary-600 font-semibold text-sm uppercase tracking-wider mb-8">
+            Conveniently located in Addis Ababa
+          </p>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -314,9 +386,14 @@ export default function Home() {
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-red-500 to-primary-500" />
 
             <div className="flex items-center justify-center gap-3 mb-4">
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center text-2xl shadow-lg shadow-red-500/30">📍</div>
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center text-2xl shadow-lg shadow-red-500/30">
+                📍
+              </div>
               <div>
-                <h3 className="text-xl font-bold text-gray-900 leading-tight">Ikram Automotive<br/><span className="text-primary-500">Workshop</span></h3>
+                <h3 className="text-xl font-bold text-gray-900 leading-tight">
+                  Ikram Automotive<br />
+                  <span className="text-primary-500">Workshop</span>
+                </h3>
                 <p className="text-xs text-gray-400 font-medium mt-1">Addis Ababa, Ethiopia</p>
               </div>
             </div>
@@ -351,23 +428,33 @@ export default function Home() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 px-4 mb-8">
               <div className="flex items-center gap-3 p-3 rounded-2xl bg-gray-50 border border-gray-100">
-                <div className="w-8 h-8 rounded-lg bg-gray-200 flex items-center justify-center text-gray-600">📞</div>
+                <div className="w-8 h-8 rounded-lg bg-gray-200 flex items-center justify-center text-gray-600">
+                  📞
+                </div>
                 <div>
                   <div className="text-xs text-gray-400 uppercase tracking-wider">Phone</div>
-                  <a href="tel:+251911111112" className="text-sm font-semibold text-gray-900 hover:text-primary-600 transition-colors">+251 911 111 112</a>
+                  <a href="tel:+251911111112" className="text-sm font-semibold text-gray-900 hover:text-primary-600 transition-colors">
+                    +251 911 111 112
+                  </a>
                 </div>
               </div>
               <div className="flex items-center gap-3 p-3 rounded-2xl bg-gray-50 border border-gray-100">
-                <div className="w-8 h-8 rounded-lg bg-gray-200 flex items-center justify-center text-gray-600">✉️</div>
+                <div className="w-8 h-8 rounded-lg bg-gray-200 flex items-center justify-center text-gray-600">
+                  ✉️
+                </div>
                 <div>
                   <div className="text-xs text-gray-400 uppercase tracking-wider">Email</div>
-                  <a href="mailto:info@ikramauto.com" className="text-sm font-semibold text-gray-900 hover:text-primary-600 transition-colors">info@ikramauto.com</a>
+                  <a href="mailto:info@ikramauto.com" className="text-sm font-semibold text-gray-900 hover:text-primary-600 transition-colors">
+                    info@ikramauto.com
+                  </a>
                 </div>
               </div>
             </div>
 
             <div className="pt-6 border-t border-gray-100">
-              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">Follow our journey</p>
+              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">
+                Follow our journey
+              </p>
               <div className="flex items-center justify-center gap-4">
                 <motion.a
                   href="https://www.tiktok.com/@ikram_automotive"
@@ -403,7 +490,9 @@ export default function Home() {
       >
         <div className="max-w-3xl mx-auto text-center space-y-6">
           <h2 className="text-3xl font-bold">Ready to Service Your Vehicle?</h2>
-          <p className="text-gray-400">Book an appointment today and experience transparent, professional auto service.</p>
+          <p className="text-gray-400">
+            Book an appointment today and experience transparent, professional auto service.
+          </p>
           <Link href="/book" className="inline-block bg-red-600 hover:bg-red-700 text-white font-semibold px-8 py-3 rounded-lg transition text-lg">
             Book Now
           </Link>
