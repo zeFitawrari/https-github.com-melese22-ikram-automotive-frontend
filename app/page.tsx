@@ -62,7 +62,7 @@ export default function Home() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-pulse text-gray-400">Loading...</div>
+        <div className="animate-pulse text-slate-500">Loading...</div>
       </div>
     );
   }
@@ -145,7 +145,7 @@ export default function Home() {
               <span className="w-1.5 h-1.5 bg-red-400 rounded-full animate-pulse" />
               Ethiopia's #1 EV Workshop
             </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold leading-tight text-white">
+            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold leading-tight text-slate-900 dark:text-white">
               Expert Auto{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-primary-500 to-red-500">
                 Repair
@@ -153,7 +153,7 @@ export default function Home() {
               <br />
               &amp; EV Service
             </h1>
-            <p className="text-lg text-gray-300 max-w-lg leading-relaxed">
+            <p className="text-lg text-slate-600 max-w-lg leading-relaxed dark:text-slate-300">
               From precision diagnostics to full customization — trust Ikram Automotive for professional vehicle service with real-time tracking, transparent pricing, and certified EV technicians.
             </p>
             <div className="flex flex-wrap gap-4 pt-2">
@@ -166,7 +166,7 @@ export default function Home() {
               </Link>
               <a
                 href="#services"
-                className="group relative inline-flex items-center gap-2 border border-white/20 hover:border-white/40 text-gray-300 hover:text-white font-semibold px-8 py-3.5 rounded-xl transition-all duration-300 bg-white/5 hover:bg-white/10 backdrop-blur-sm"
+                className="group relative inline-flex items-center gap-2 border border-slate-300 hover:bg-slate-100 text-slate-800 hover:text-slate-900 font-semibold px-8 py-3.5 rounded-xl transition-all duration-300 dark:border-slate-600 dark:hover:bg-slate-800 dark:text-slate-200 dark:hover:text-slate-100"
               >
                 <span>Our Services</span>
                 <span className="text-sm">→</span>
@@ -174,20 +174,20 @@ export default function Home() {
             </div>
             <div className="flex gap-6 pt-8">
               <div className="flex flex-col">
-                <div className="text-3xl font-bold text-white">500+</div>
-                <div className="text-xs text-gray-400 uppercase tracking-wider">
+                <div className="text-3xl font-bold text-slate-900 dark:text-white">500+</div>
+                <div className="text-xs text-slate-500 uppercase tracking-wider dark:text-slate-400">
                   Vehicles Serviced
                 </div>
               </div>
               <div className="flex flex-col">
-                <div className="text-3xl font-bold text-white">98%</div>
-                <div className="text-xs text-gray-400 uppercase tracking-wider">
+                <div className="text-3xl font-bold text-slate-900 dark:text-white">98%</div>
+                <div className="text-xs text-slate-500 uppercase tracking-wider dark:text-slate-400">
                   Customer Satisfaction
                 </div>
               </div>
               <div className="flex flex-col">
-                <div className="text-3xl font-bold text-white">24/7</div>
-                <div className="text-xs text-gray-400 uppercase tracking-wider">
+                <div className="text-3xl font-bold text-slate-900 dark:text-white">24/7</div>
+                <div className="text-xs text-slate-500 uppercase tracking-wider dark:text-slate-400">
                   Job Tracking
                 </div>
               </div>
@@ -199,41 +199,41 @@ export default function Home() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="flex-1 max-w-md w-full relative"
           >
-            <div className="bg-white/10 backdrop-blur-xl rounded-3xl border border-white/20 p-8 shadow-2xl relative overflow-hidden group">
+            <div className="bg-white rounded-3xl border border-slate-200 p-8 shadow-sm relative overflow-hidden group dark:bg-slate-800/60 dark:border-slate-700">
               <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-red-500 via-primary-500 to-red-500" />
               <div className="relative z-10 flex flex-col items-center gap-4">
-                <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-red-500/20 to-primary-500/20 flex items-center justify-center text-4xl border border-white/10 group-hover:scale-110 transition-transform duration-500">
+                <div className="w-24 h-24 rounded-2xl bg-slate-50/60 flex items-center justify-center text-4xl border border-slate-200 group-hover:scale-110 transition-transform duration-500 dark:bg-slate-800/60 dark:border-slate-700">
                   <span>🔋</span>
                 </div>
-                <h3 className="text-xl font-bold text-white">
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white">
                   EV-Ready Workshop
                 </h3>
-                <p className="text-sm text-gray-400 text-center max-w-xs">
+                <p className="text-sm text-slate-500 text-center max-w-xs dark:text-slate-400">
                   Specialized in Tesla, BYD, and all major EV brands with certified high-voltage technicians.
                 </p>
               </div>
               <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div className="bg-white/5 rounded-xl p-4 text-center border border-white/10 hover:bg-white/10 transition-colors group-hover:border-primary-500/50">
-                  <div className="font-semibold text-white">Battery Health</div>
-                  <div className="text-xs text-gray-400 mt-1">
+                <div className="bg-slate-50 rounded-xl p-4 text-center border border-slate-200 hover:bg-slate-100 transition-colors group-hover:border-primary-500/50 dark:bg-slate-800 dark:border-slate-700">
+                  <div className="font-semibold text-slate-900 dark:text-white">Battery Health</div>
+                  <div className="text-xs text-slate-500 mt-1 dark:text-slate-400">
                     Full diagnostics
                   </div>
                 </div>
-                <div className="bg-white/5 rounded-xl p-4 text-center border border-white/10 hover:bg-white/10 transition-colors group-hover:border-primary-500/50">
-                  <div className="font-semibold text-white">Motor Service</div>
-                  <div className="text-xs text-gray-400 mt-1">
+                <div className="bg-slate-50 rounded-xl p-4 text-center border border-slate-200 hover:bg-slate-100 transition-colors group-hover:border-primary-500/50 dark:bg-slate-800 dark:border-slate-700">
+                  <div className="font-semibold text-slate-900 dark:text-white">Motor Service</div>
+                  <div className="text-xs text-slate-500 mt-1 dark:text-slate-400">
                     Performance tuning
                   </div>
                 </div>
-                <div className="bg-white/5 rounded-xl p-4 text-center border border-white/10 hover:bg-white/10 transition-colors group-hover:border-primary-500/50">
-                  <div className="font-semibold text-white">Software Update</div>
-                  <div className="text-xs text-gray-400 mt-1">
+                <div className="bg-slate-50 rounded-xl p-4 text-center border border-slate-200 hover:bg-slate-100 transition-colors group-hover:border-primary-500/50 dark:bg-slate-800 dark:border-slate-700">
+                  <div className="font-semibold text-slate-900 dark:text-white">Software Update</div>
+                  <div className="text-xs text-slate-500 mt-1 dark:text-slate-400">
                     OTA management
                   </div>
                 </div>
-                <div className="bg-white/5 rounded-xl p-4 text-center border border-white/10 hover:bg-white/10 transition-colors group-hover:border-primary-500/50">
-                  <div className="font-semibold text-white">Charging</div>
-                  <div className="text-xs text-gray-400 mt-1">
+                <div className="bg-slate-50 rounded-xl p-4 text-center border border-slate-200 hover:bg-slate-100 transition-colors group-hover:border-primary-500/50 dark:bg-slate-800 dark:border-slate-700">
+                  <div className="font-semibold text-slate-900 dark:text-white">Charging</div>
+                  <div className="text-xs text-slate-500 mt-1 dark:text-slate-400">
                     Installation &amp; repair
                   </div>
                 </div>
@@ -334,7 +334,7 @@ export default function Home() {
                         : `${Number(service.base_price).toFixed(2)} ETB`}
                     </span>
                     {service.estimated_minutes ? (
-                      <span className="text-xs text-gray-400">
+                      <span className="text-xs text-slate-500">
                         {service.estimated_minutes} min
                       </span>
                     ) : null}
@@ -462,7 +462,7 @@ export default function Home() {
                   <div className="font-semibold text-gray-900 text-sm">
                     {t.name}
                   </div>
-                  <div className="text-xs text-gray-400">{t.role}</div>
+                  <div className="text-xs text-slate-500 dark:text-slate-400">{t.role}</div>
                 </div>
               </motion.div>
             ))}
@@ -500,7 +500,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.5 }}
-            className="bg-white/80 backdrop-blur-xl rounded-3xl border border-white/60 p-8 sm:p-10 max-w-2xl mx-auto shadow-2xl relative overflow-hidden"
+            className="bg-white rounded-3xl border border-slate-200 p-8 sm:p-10 max-w-2xl mx-auto shadow-xl relative overflow-hidden dark:bg-slate-800 dark:border-slate-700"
           >
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-red-500 to-primary-500" />
             <div className="flex items-center justify-center gap-3 mb-4">
@@ -512,7 +512,7 @@ export default function Home() {
                   Ikram Automotive{' '}
                   <span className="text-primary-500">Workshop</span>
                 </h3>
-                <p className="text-xs text-gray-400 font-medium mt-1">
+                <p className="text-xs text-slate-500 font-medium mt-1 dark:text-slate-400">
                   Addis Ababa, Ethiopia
                 </p>
               </div>
@@ -552,7 +552,7 @@ export default function Home() {
                   📞
                 </div>
                 <div>
-                  <div className="text-xs text-gray-400 uppercase tracking-wider">
+                  <div className="text-xs text-slate-500 uppercase tracking-wider dark:text-slate-400">
                     Phone
                   </div>
                   <a
@@ -568,7 +568,7 @@ export default function Home() {
                   ✉️
                 </div>
                 <div>
-                  <div className="text-xs text-gray-400 uppercase tracking-wider">
+                  <div className="text-xs text-slate-500 uppercase tracking-wider dark:text-slate-400">
                     Email
                   </div>
                   <a
@@ -581,7 +581,7 @@ export default function Home() {
               </div>
             </div>
             <div className="pt-6 border-t border-gray-100">
-              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">
+              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-4 dark:text-slate-400">
                 Follow our journey
               </p>
               <div className="flex items-center justify-center gap-4">

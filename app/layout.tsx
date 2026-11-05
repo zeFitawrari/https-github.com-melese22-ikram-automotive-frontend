@@ -20,9 +20,19 @@ export const metadata: Metadata = {
   },
 };
 
+// Inline theme script: applies the dark/light class to <html> before hydration
+// so there is no flash of an incorrect theme. Reads localStorage + system preference.
+const themeScript = `(function(){try{var t=localStorage&&localStorage.getItem('ikram-theme');var d=window.matchMedia('(prefers-color-scheme: dark)').matches;var h=document.documentElement;if(t==='dark'||(t!=='light'&&d)){h.classList.add('dark');}else{h.classList.remove('dark');}}catch(e){}})();`;
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
+      <head>
+        <script
+          id="ikram-theme-init"
+          dangerouslySetInnerHTML={{ __html: themeScript }}
+        />
+      </head>
       <body className={`${inter.className} ${poppins.variable}`}>
         <Providers>{children}</Providers>
       </body>
