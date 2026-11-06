@@ -16,7 +16,7 @@ if ! CI=true timeout 600 npm run build --silent > "$LOG" 2>&1 </dev/null; then
   exit 0
 fi
 
-sed 's/\x1b\[[0-9;]*m//g' "$LOG" | grep -iE '(⚠|warn)' | sort -u > scripts/.gate-baseline.txt || true
+sed 's/\x1b\[[0-9;]*m//g' "$LOG" | grep -iE '(⚠|warn)' | LC_ALL=C sort -u > scripts/.gate-baseline.txt || true
 COUNT=$(wc -l < scripts/.gate-baseline.txt)
 echo "Wrote $COUNT baseline warnings to scripts/.gate-baseline.txt"
 rm -f "$LOG"

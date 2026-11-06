@@ -57,8 +57,8 @@ if ! CI=true timeout 600 npm run build --silent > "$BUILD_LOG" 2>&1 </dev/null; 
   exit 4
 fi
 
-sed 's/\x1b\[[0-9;]*m//g' "$BUILD_LOG" | grep -iE '(⚠|warn)' | sort -u > "$WARN_NOW" || true
-NEW_WARNS=$(comm -13 <(sort "$BASELINE") "$WARN_NOW" || true)
+sed 's/\x1b\[[0-9;]*m//g' "$BUILD_LOG" | grep -iE '(⚠|warn)' | LC_ALL=C sort -u > "$WARN_NOW" || true
+NEW_WARNS=$(comm -13 <(LC_ALL=C sort "$BASELINE") "$WARN_NOW" || true)
 if [ -n "$NEW_WARNS" ]; then
   echo "❌ GATE FAILURE: New build warnings introduced:"
   echo "$NEW_WARNS"
