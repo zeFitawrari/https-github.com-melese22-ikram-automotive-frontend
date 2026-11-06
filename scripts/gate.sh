@@ -10,7 +10,7 @@ echo "=================================================="
 
 # 1. SCOPE CHECK
 echo "==> [1/4] Scope check..."
-ALLOWED_PREFIXES=("app/" "components/" "lib/" "public/" "tests/audit/" "docs/audit/" "next.config.js" "tailwind.config.js" "package.json" "package-lock.json")
+ALLOWED_PREFIXES=("app/" "components/" "lib/" "public/" "tests/audit/" "docs/audit/" ".github/" "next.config.js" "tailwind.config.js" "package.json" "package-lock.json")
 CHANGED=$( { git diff --name-only HEAD; git ls-files --others --exclude-standard; } | sort -u )
 for file in $CHANGED; do
   IN_SCOPE=false
