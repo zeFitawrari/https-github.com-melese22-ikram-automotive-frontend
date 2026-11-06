@@ -11,3 +11,6 @@ build/
 tsconfig.tsbuildinfo
 deploy.json
 nul
+
+# Audit script backups
+*.bak-*
