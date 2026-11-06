@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -e
+export NODE_ENV=production
+LOG=$(mktemp)
+echo "Generating initial Next.js warning baseline..."
+npx next build > "$LOG" 2>&1 || true
+sed 's/\x1b\[[0-9;]*m//g' "$LOG" | grep -iE '(⚠|warn)' | sort -u > scripts/.gate-baseline.txt || true
+echo "Wrote $(wc -l < scripts/.gate-baseline.txt) baseline warnings to scripts/.gate-baseline.txt"
+rm -f "$LOG"
