@@ -7,7 +7,7 @@ LOG=$(mktemp)
 
 echo "Running next build (timeout 600s, non-interactive)..."
 
-if ! CI=true timeout 600 npm run build --silent > "$LOG" 2>&1 </dev/null; then
+if ! CI=true NEXT_FONT_GOOGLE_MOCKED_RESPONSES="$PWD/scripts/font-mocks.js" timeout 600 npm run build --silent > "$LOG" 2>&1 </dev/null; then
   echo "⚠️  Build failed or timed out (600s)."
   echo "   Diagnose with: npm run build   (run directly, no redirect)"
   echo "   Creating empty baseline so gate.sh can still run."

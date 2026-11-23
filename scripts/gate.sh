@@ -50,7 +50,7 @@ BASELINE="scripts/.gate-baseline.txt"
 
 [ -f "$BASELINE" ] || touch "$BASELINE"
 
-if ! CI=true timeout 600 npm run build --silent > "$BUILD_LOG" 2>&1 </dev/null; then
+if ! CI=true NEXT_FONT_GOOGLE_MOCKED_RESPONSES="$PWD/scripts/font-mocks.js" timeout 600 npm run build --silent > "$BUILD_LOG" 2>&1 </dev/null; then
   echo "❌ GATE FAILURE: Next.js build failed or timed out (600s)!"
   tail -40 "$BUILD_LOG"
   rm -f "$BUILD_LOG" "$WARN_NOW"
